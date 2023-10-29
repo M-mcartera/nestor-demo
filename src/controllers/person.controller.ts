@@ -42,3 +42,13 @@ export const deletePerson = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Error deleting person" });
   }
 };
+
+export const getPersonHierarchyGroups = async (req: Request, res: Response) => {
+  try {
+    const personId = parseInt(req.params.personId);
+    const result = await personService.getPersonHierarchy(personId);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

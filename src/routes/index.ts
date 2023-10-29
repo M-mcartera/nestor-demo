@@ -14,4 +14,11 @@ router.get("/persons", personController.getAllPersons);
 router.put("/persons/:personId", personController.updatePerson);
 router.delete("/persons/:personId", personController.deletePerson);
 
+router.get("/groups/all", groupController.getAllGroupsAndPersons);
+router.get(
+  "/persons/:personId/hierarchy",
+  personController.getPersonHierarchyGroups
+);
+router.get("/groups/:groupId/persons", groupController.getPersonsByGroupId);
+
 export default router;

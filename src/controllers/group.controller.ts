@@ -7,6 +7,7 @@ export const createGroup = async (req: Request, res: Response) => {
     const result = await groupService.createGroup(groupData);
     res.status(201).json(result);
   } catch (error) {
+    console.log({ error });
     res.status(500).json({ error: "Error creating group" });
   }
 };
@@ -40,5 +41,30 @@ export const deleteGroup = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: "Error deleting group" });
+  }
+};
+
+export const getAllGroupsAndPersons = async (req: Request, res: Response) => {
+  try {
+    const result = await groupService.getAllGroupsAndPersons();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getPersonsByGroupId = async (req: Request, res: Response) => {
+  try {
+    const groupId = parseInt(req.params.groupId);
+    const queryParams = req.query;
+    const { firstname, jobTitle } = queryParams;
+    const result = await groupService.getPersonsByGroupId(
+      groupId,
+      jobTitle as string,
+      firstname as string
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Get persons by group id error" });
   }
 };
